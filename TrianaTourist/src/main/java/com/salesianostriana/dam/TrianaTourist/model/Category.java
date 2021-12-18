@@ -1,21 +1,18 @@
 package com.salesianostriana.dam.TrianaTourist.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Category implements Serializable {
 
     @Id
@@ -23,6 +20,5 @@ public class Category implements Serializable {
     private Long id;
 
     private String name;
-
 
 }

@@ -24,12 +24,12 @@ public class POI implements Serializable {
     private String location;
 
     @Lob
-    private String descripcion;
+    private String description;
 
     private Date date;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(name = "FK_POI_CATEGORY"))
     private Category category;
 
     private String coverPhoto;
@@ -38,8 +38,9 @@ public class POI implements Serializable {
 
     private String photo3;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "poi")
-    private List<Interesa> interesas = new ArrayList<>();
+
+
+
+
 
 }

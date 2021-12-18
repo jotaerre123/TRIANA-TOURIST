@@ -2,10 +2,7 @@ package com.salesianostriana.dam.TrianaTourist.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Route implements Serializable {
 
     @Id
@@ -23,12 +21,13 @@ public class Route implements Serializable {
 
     private String name;
 
-
+    @ManyToMany
+    @JoinTable(name = "routes",
+            inverseJoinColumns = @JoinColumn(name = "poi_id", foreignKey = @ForeignKey(name = "FK_ROUTES_POI")),
+            joinColumns = @JoinColumn(name = "route_id",
+                    foreignKey = @ForeignKey(name = "FK_ROUTES_ROUTE")))
     private List<POI> steps = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "route")
-    private List<Interesa> interesas = new ArrayList<>();
 
 
 }
