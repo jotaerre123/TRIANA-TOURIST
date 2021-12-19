@@ -26,44 +26,23 @@ public class RouteService {
     private final RouteRepository routeRepository;
     private final RouteDtoConverter routeDtoConverter;
 
-    public ResponseEntity<List<GetRouteDto>> findAll() {
-
-        List<Route> data = routeRepository.findAll();
-
-        if (data.isEmpty()) {
+    public List<Route> findAll(){
+        if (routeRepository.findAll().isEmpty()){
             throw new ListEntityNotFoundException(Route.class);
-        } else {
-
-            List<GetRouteDto> result = data.stream().map(routeDtoConverter::routeToGetRouteDto)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(result);
+        }else{
+            return routeRepository.findAll();
         }
-
+    }
+    public Optional<Route> findById(Long id){
+        if (routeRepository.findById(id).isEmpty()){
+            throw new SingleEntityNotFoundException(id.toString(),Route.class);
+        }else {
+            return routeRepository.findById(id);
+        }
     }
 
-    public ResponseEntity<List<GetRouteDto>> findById(Long id) {
-
-        Optional<Route> data = routeRepository.findById(id);
-
-        if (data.isEmpty()) {
-            throw new SingleEntityNotFoundException(id.toString(), Category.class);
-        } else {
-
-            List<GetRouteDto> result = data.stream().map(routeDtoConverter::routeToGetRouteDto)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok().body(result);
-        }
-
-
-    }
-
-    public ResponseEntity<Route> save(CreateRouteDto route) {
-
-        Route newRoute = routeDtoConverter.createRouteDtoToRoute(route);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(routeRepository.save(newRoute));
+    public void save(Route route){
+        routeRepository.save(route);
     }
 
     public ResponseEntity<Route> edit(Long id, CreateRouteDto c) {

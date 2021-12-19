@@ -2,14 +2,17 @@ package com.salesianostriana.dam.TrianaTourist.controller;
 
 import com.salesianostriana.dam.TrianaTourist.dto.poi.CreatePOIDto;
 import com.salesianostriana.dam.TrianaTourist.dto.poi.GetPOIDto;
+import com.salesianostriana.dam.TrianaTourist.dto.poi.POIDtoConverter;
 import com.salesianostriana.dam.TrianaTourist.model.POI;
 import com.salesianostriana.dam.TrianaTourist.services.POIService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,29 +20,49 @@ import java.util.List;
 public class POIController {
 
     private final POIService poiService;
+    private final POIDtoConverter poiDtoConverter;
 
     @GetMapping("/")
-    public ResponseEntity<List<GetPOIDto>> findAll(){
-        return poiService.findAll();
+    public ResponseEntity<List<POI>> findAll(){
+
+        return ResponseEntity.ok().body(poiService.findAll());
+
     }
     @GetMapping("/{id}")
-    public ResponseEntity<List<GetPOIDto>> findOne(@PathVariable("id") Long id){
-        return poiService.findById(id);
-    }
+    public ResponseEntity<GetPOIDto> findOne(@PathVariable Long id){
 
+        Optional<POI> poi= poiService.findOne(id);
+
+        return ResponseEntity.ok().body(poiDtoConverter.POIToGetPOIDto(poi.get()));
+
+    }
     @PostMapping("/")
-    public ResponseEntity<POI> create(@Valid @RequestBody CreatePOIDto createPOIDto){
-        return poiService.save(createPOIDto);
+    public ResponseEntity<GetPOIDto> create(@Valid @RequestBody CreatePOIDto dto){
+
+        POI poi = poiDtoConverter.createPOIToCratePOIDto(dto);
+
+        poiService.save(poi);
+
+        GetPOIDto poiDto = poiDtoConverter.POIToGetPOIDto(poi);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(poiDto);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id){
+
+        poiService.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<POI> edit(@PathVariable("id") Long id, @Valid @RequestBody CreatePOIDto createPOIDto){
+
         return poiService.edit(id, createPOIDto);
+
+
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable("id") Long id){
-        return poiService.delete(id);
-    }
+
 
 }

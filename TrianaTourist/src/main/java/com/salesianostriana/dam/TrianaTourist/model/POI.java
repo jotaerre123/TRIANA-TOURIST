@@ -38,6 +38,12 @@ public class POI implements Serializable {
 
     private String photo3;
 
+    public void addToRoute(Route route){
+        route.getSteps().add(this);
+    }
+    public void deleteFromRoute(Route route){
+        route.getSteps().remove(this);
+    }
 
 
 

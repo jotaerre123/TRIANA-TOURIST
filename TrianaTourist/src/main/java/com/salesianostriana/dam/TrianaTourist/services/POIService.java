@@ -6,6 +6,7 @@ import com.salesianostriana.dam.TrianaTourist.dto.category.GetCategoryDto;
 import com.salesianostriana.dam.TrianaTourist.dto.poi.CreatePOIDto;
 import com.salesianostriana.dam.TrianaTourist.dto.poi.GetPOIDto;
 import com.salesianostriana.dam.TrianaTourist.dto.poi.POIDtoConverter;
+import com.salesianostriana.dam.TrianaTourist.errores.excepciones.EntityNotFoundException;
 import com.salesianostriana.dam.TrianaTourist.errores.excepciones.ListEntityNotFoundException;
 import com.salesianostriana.dam.TrianaTourist.errores.excepciones.SingleEntityNotFoundException;
 import com.salesianostriana.dam.TrianaTourist.model.Category;
@@ -30,44 +31,30 @@ public class POIService {
     private final CategoryRepository categoryRepository;
 
 
-    public ResponseEntity<List<GetPOIDto>> findAll() {
-
-        List<POI> data = poiRepository.findAll();
-
-        if (data.isEmpty()) {
+    public List<POI> findAll(){
+        if (poiRepository.findAll().isEmpty()){
             throw new ListEntityNotFoundException(POI.class);
-        } else {
-
-            List<GetPOIDto> result = data.stream().map(poiDtoConverter::POIToGetPOIDto)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(result);
+        }else{
+            return poiRepository.findAll();
         }
-
+    }
+    public Optional<POI> findOne(Long id){
+        if (poiRepository.findById(id).isEmpty()){
+            throw new SingleEntityNotFoundException(id.toString(),POI.class);
+        }else {
+            return poiRepository.findById(id);
+        }
+    }
+    public void deleteById(Long id){
+        if (poiRepository.findById(id).isEmpty()){
+            throw new SingleEntityNotFoundException(id.toString(),POI.class);
+        }else{
+            poiRepository.deleteById(id);
+        }
     }
 
-    public ResponseEntity<List<GetPOIDto>> findById(Long id) {
-
-        Optional<POI> data = poiRepository.findById(id);
-
-        if (data.isEmpty()) {
-            throw new SingleEntityNotFoundException(id.toString(), Category.class);
-        } else {
-
-            List<GetPOIDto> result = data.stream().map(poiDtoConverter::POIToGetPOIDto)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok().body(result);
-        }
-
-
-    }
-
-    public ResponseEntity<POI> save(CreatePOIDto poi) {
-
-        POI newPOI = poiDtoConverter.createPOIToCratePOIDto(poi);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(poiRepository.save(newPOI));
+    public void save (POI poi){
+        poiRepository.save(poi);
     }
 
     public ResponseEntity<POI> edit(Long id, CreatePOIDto poi) {
@@ -96,17 +83,6 @@ public class POIService {
 
     }
 
-    public ResponseEntity<?> delete(Long id) {
 
-        Optional<POI> data = poiRepository.findById(id);
-
-        if (data.isEmpty()) {
-            throw new SingleEntityNotFoundException(id.toString(), Category.class);
-        } else {
-            poiRepository.deleteById(id);
-            return ResponseEntity.status(204).build();
-        }
-
-    }
 
 }
