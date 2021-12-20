@@ -7,6 +7,7 @@ import com.salesianostriana.dam.TrianaTourist.errores.excepciones.ListEntityNotF
 import com.salesianostriana.dam.TrianaTourist.errores.excepciones.SingleEntityNotFoundException;
 import com.salesianostriana.dam.TrianaTourist.model.Category;
 import com.salesianostriana.dam.TrianaTourist.repos.CategoryRepository;
+import com.salesianostriana.dam.TrianaTourist.repos.POIRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final CategoryDtoConverter categoryDtoConverter;
+    private final POIRepository poiRepository;
 
 
     public ResponseEntity<List<GetCategoryDto>> findAll() {
@@ -80,6 +82,12 @@ public class CategoryService {
         if (data.isEmpty()) {
             throw new SingleEntityNotFoundException(id.toString(), Category.class);
         } else {
+
+            poiRepository.categoriasExistentesPoi(id).forEach(m -> {
+                m.setCategory(null);
+                poiRepository.save(m);
+            });
+
             categoryRepository.deleteById(id);
             return ResponseEntity.status(204).build();
         }
