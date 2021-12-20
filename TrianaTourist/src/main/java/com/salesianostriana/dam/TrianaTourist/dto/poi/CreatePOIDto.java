@@ -3,6 +3,7 @@ package com.salesianostriana.dam.TrianaTourist.dto.poi;
 import com.salesianostriana.dam.TrianaTourist.model.Category;
 import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.LocationValueMatch;
 import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.POIUniqueName;
+import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.UrlMatchValue;
 import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.UrlValueMatch;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -27,14 +28,9 @@ import java.util.Date;
 @UrlValueMatch.List({
         @UrlValueMatch(
                 coverPhoto = "coverPhoto"
-        ),
-        @UrlValueMatch(
-                coverPhoto = "photo2"
-        ),
-        @UrlValueMatch(
-                coverPhoto = "photo3"
         )
 })
+@UrlMatchValue(coverPhoto = "coverPhoto", photo2 = "photo2", photo3 = "photo3")
 public class CreatePOIDto {
 
     private Long id;
