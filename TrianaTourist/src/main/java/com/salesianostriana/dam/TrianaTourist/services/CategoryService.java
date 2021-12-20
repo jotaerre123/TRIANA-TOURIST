@@ -40,21 +40,11 @@ public class CategoryService {
 
     }
 
-    public ResponseEntity<List<GetCategoryDto>> findById(Long id) {
-
-        Optional<Category> data = categoryRepository.findById(id);
-
-        if (data.isEmpty()) {
-            throw new SingleEntityNotFoundException(id.toString(), Category.class);
-        } else {
-
-            List<GetCategoryDto> result = data.stream().map(categoryDtoConverter::categoryToGetCategoryDto)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok().body(result);
+    public Optional<Category> findById(Long id){
+        if (categoryRepository.findById(id).isEmpty()){
+            throw new SingleEntityNotFoundException(id.toString(),Category.class);
         }
-
-
+        return categoryRepository.findById(id);
     }
 
     public ResponseEntity<Category> save(CreateCategoryDto category) {

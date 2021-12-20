@@ -24,8 +24,8 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<GetCategoryDto>> findOne(@PathVariable("id") Long id){
-        return categoryService.findById(id);
+    public ResponseEntity<Category> findOne(@PathVariable("id") Long id){
+        return ResponseEntity.of(categoryService.findById(id));
     }
     @PostMapping("/")
     public ResponseEntity<Category> create(@Valid @RequestBody CreateCategoryDto createCategoryDto){

@@ -55,6 +55,7 @@ public class RouteService {
             return ResponseEntity.of(routeRepository.findById(id).map(
                     m -> {
                         m.setName(c.getName());
+                        m.setSteps(c.getPoi());
                         routeRepository.save(m);
                         return m;
                     }
