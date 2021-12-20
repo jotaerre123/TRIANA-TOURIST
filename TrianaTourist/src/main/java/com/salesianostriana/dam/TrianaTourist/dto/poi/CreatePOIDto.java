@@ -20,13 +20,18 @@ import java.util.Date;
 @LocationValueMatch.List({
         @LocationValueMatch(
                 location = "location",
-                message = "{estacion.ubicacion.pattern}"
+                message = "Coordenadas mal introducidas, pruebe de nuevo"
         )
 })
 @UrlValueMatch.List({
         @UrlValueMatch(
-                coverPhoto = "coverPhoto",
-                message = "URL no válida"
+                coverPhoto = "coverPhoto"
+        ),
+        @UrlValueMatch(
+                coverPhoto = "photo2"
+        ),
+        @UrlValueMatch(
+                coverPhoto = "photo3"
         )
 })
 public class CreatePOIDto {
@@ -51,11 +56,10 @@ public class CreatePOIDto {
     private String coverPhoto;
 
 
-    @Pattern(regexp = "^(?:(?<scheme>[^:\\/?#]+):)?(?:\\/\\/(?<authority>[^\\/?#]*))?(?<path>[^?#]*\\/)?(?<file>[^?#]*\\.(?<extension>[Jj][Pp][Ee]?[Gg]|[Pp][Nn][Gg]|[Gg][Ii][Ff]))(?:\\?(?<query>[^#]*))?(?:#(?<fragment>.*))?$")
+
     private String photo2;
 
 
-    @Pattern(regexp = "^(?:(?<scheme>[^:\\/?#]+):)?(?:\\/\\/(?<authority>[^\\/?#]*))?(?<path>[^?#]*\\/)?(?<file>[^?#]*\\.(?<extension>[Jj][Pp][Ee]?[Gg]|[Pp][Nn][Gg]|[Gg][Ii][Ff]))(?:\\?(?<query>[^#]*))?(?:#(?<fragment>.*))?$")
     private String photo3;
 
 
