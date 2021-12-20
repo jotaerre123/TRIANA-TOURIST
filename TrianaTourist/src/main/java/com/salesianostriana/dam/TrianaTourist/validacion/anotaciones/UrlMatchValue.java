@@ -12,18 +12,12 @@ import java.lang.annotation.*;
 @Documented
 public @interface UrlMatchValue {
 
-    String message() default "Las fotos no pueden coincidir";
+    String message() default "Las fotos no pueden ser iguales";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 
-    String coverPhoto();
-    String photo2();
-    String photo3();
-
-    @Target({ ElementType.TYPE })
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface List {
-        UrlMatchValue[] value();
-    }
+    String[] fotosUrl();
 
 }
