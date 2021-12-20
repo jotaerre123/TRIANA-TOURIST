@@ -2,6 +2,7 @@ package com.salesianostriana.dam.TrianaTourist.dto.poi;
 
 import com.salesianostriana.dam.TrianaTourist.model.Category;
 import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.LocationValueMatch;
+import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.POIUniqueName;
 import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.UrlValueMatch;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
@@ -40,6 +41,7 @@ public class CreatePOIDto {
 
     @NotNull(message = "{category.nombre.null}")
     @NotBlank(message = "{category.nombre.blank}")
+    @POIUniqueName
     private String name;
 
     private String location;
@@ -56,10 +58,10 @@ public class CreatePOIDto {
     private String coverPhoto;
 
 
-
+    @URL
     private String photo2;
 
-
+    @URL
     private String photo3;
 
 

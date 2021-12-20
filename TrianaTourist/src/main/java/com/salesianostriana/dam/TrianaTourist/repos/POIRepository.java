@@ -13,4 +13,7 @@ public interface POIRepository extends JpaRepository<POI, Long> {
             select * from POI where category_id = :id""", nativeQuery = true)
     List<POI> categoriasExistentesPoi (@Param("id") Long id);
 
+
+    boolean existsByName(String name);
+
 }
