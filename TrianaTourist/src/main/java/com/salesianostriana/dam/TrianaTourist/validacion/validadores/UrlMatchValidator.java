@@ -22,11 +22,11 @@ public class UrlMatchValidator implements ConstraintValidator<UrlMatchValue, Obj
             Object field = PropertyAccessorFactory.forBeanPropertyAccess(o).getPropertyValue(fotos[i]);
             for (int j = i + 1; j < fotos.length; j++) {
                 Object field2 = PropertyAccessorFactory.forBeanPropertyAccess(o).getPropertyValue(fotos[j]);
-                if (field == field2) {
-                    return true;
+                if (field.equals(field2) ) {
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 }

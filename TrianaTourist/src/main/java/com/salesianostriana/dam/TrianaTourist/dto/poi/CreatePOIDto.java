@@ -30,7 +30,7 @@ import java.util.Date;
                 coverPhoto = "coverPhoto"
         )
 })
-@UrlMatchValue(fields = {"coverPhoto", "photo2", "photo3"})
+@UrlMatchValue(fotosUrl = {"coverPhoto", "photo2", "photo3"})
 public class CreatePOIDto {
 
     private Long id;
@@ -50,7 +50,7 @@ public class CreatePOIDto {
     private Long category;
 
     @URL
-    @NotNull
+    @NotBlank
     private String coverPhoto;
 
 
