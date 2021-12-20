@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.TrianaTourist.dto.route;
 
 import com.salesianostriana.dam.TrianaTourist.model.POI;
+import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.RouteUniqueName;
 import com.salesianostriana.dam.TrianaTourist.validacion.anotaciones.UniqueName;
 import lombok.*;
 
@@ -19,7 +20,7 @@ public class CreateRouteDto {
 
     @NotNull(message = "{category.nombre.null}")
     @NotBlank(message = "{category.nombre.blank}")
-    @UniqueName(message = "No puede haber 2 iguales")
+    @RouteUniqueName
     private String name;
 
     private List<POI> poi;
