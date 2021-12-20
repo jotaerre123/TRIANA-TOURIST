@@ -5,14 +5,12 @@ import com.salesianostriana.dam.TrianaTourist.validacion.validadores.UrlValueVal
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 @Constraint(validatedBy = UrlValueValidator.class)
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface UrlValueMatch {
 
     String message() default "La URL introducida no es válida";
